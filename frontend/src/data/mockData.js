@@ -9,22 +9,35 @@ export const PRESET_TICKERS = [
   { symbol: 'NVDA', name: 'NVIDIA Corp.' }
 ];
 
-// Generate mock historical data for demonstration
+// Generate mock historical data that updates daily
 const generateMockData = (ticker, days = 252) => {
   const data = [];
-  const startDate = new Date();
+  const endDate = new Date();
+  endDate.setHours(0, 0, 0, 0); // Normalize to start of day
+  
+  const startDate = new Date(endDate);
   startDate.setDate(startDate.getDate() - days);
   
-  let basePrice = ticker === 'AAPL' ? 150 : ticker === 'MSFT' ? 350 : ticker === 'TSLA' ? 250 : ticker === 'SPY' ? 450 : 500;
-  let price = basePrice;
+  // Use ticker and current date to seed random variations (deterministic per day)
+  const seed = ticker.charCodeAt(0) + endDate.getDate() + endDate.getMonth();
+  let basePrice = ticker === 'AAPL' ? 180 : ticker === 'MSFT' ? 420 : ticker === 'TSLA' ? 280 : ticker === 'SPY' ? 475 : 520;
+  let price = basePrice * 0.85; // Start from 85% of current price
   
   for (let i = 0; i < days; i++) {
     const date = new Date(startDate);
     date.setDate(date.getDate() + i);
     
-    // Simulate price movement with slight upward trend
-    const change = (Math.random() - 0.48) * 5;
+    // Deterministic but realistic price movement
+    const dayOffset = i + seed;
+    const trend = 0.0008; // Slight upward trend
+    const volatility = 0.015;
+    const randomFactor = Math.sin(dayOffset * 0.1) * Math.cos(dayOffset * 0.05);
+    const change = price * (trend + (randomFactor * volatility));
+    
     price = price + change;
+    
+    // Ensure price doesn't go negative
+    if (price < basePrice * 0.5) price = basePrice * 0.5;
     
     data.push({
       date: date.toISOString().split('T')[0],
