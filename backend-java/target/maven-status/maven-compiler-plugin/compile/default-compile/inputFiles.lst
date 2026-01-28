@@ -1,0 +1,15 @@
+/app/backend-java/src/main/java/com/marketlens/service/AnalyticsCalculationService.java
+/app/backend-java/src/main/java/com/marketlens/controller/AnalysisController.java
+/app/backend-java/src/main/java/com/marketlens/dto/TickerInfo.java
+/app/backend-java/src/main/java/com/marketlens/dto/AnalysisResponse.java
+/app/backend-java/src/main/java/com/marketlens/model/AnalysisRun.java
+/app/backend-java/src/main/java/com/marketlens/repository/AnalysisRunRepository.java
+/app/backend-java/src/main/java/com/marketlens/controller/TickerController.java
+/app/backend-java/src/main/java/com/marketlens/dto/AnalysisRequest.java
+/app/backend-java/src/main/java/com/marketlens/service/AnalysisService.java
+/app/backend-java/src/main/java/com/marketlens/repository/AnalysisResultRepository.java
+/app/backend-java/src/main/java/com/marketlens/config/CorsConfig.java
+/app/backend-java/src/main/java/com/marketlens/service/YahooFinanceService.java
+/app/backend-java/src/main/java/com/marketlens/MarketLensApplication.java
+/app/backend-java/src/main/java/com/marketlens/model/AnalysisResult.java
+/app/backend-java/src/main/java/com/marketlens/config/AsyncConfig.java
