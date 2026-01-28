@@ -241,7 +241,7 @@ const CaseStudy = () => {
                   <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-semibold text-gray-900">RSI (14-period)</h4>
-                    <p className="text-sm text-gray-600">Relative Strength Index with Wilder smoothing, flagging overbought (≥70) and oversold (≤30) conditions</p>
+                    <p className="text-sm text-gray-600">Relative Strength Index with Wilder smoothing, flagging overbought (RSI &gt;= 70) and oversold (RSI &lt;= 30) conditions</p>
                   </div>
                 </div>
               </div>
