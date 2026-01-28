@@ -85,6 +85,7 @@ const LandingPage = ({ onRunDemo }) => {
             <p className="text-xl text-gray-600 mb-12 leading-relaxed max-w-2xl mx-auto">
               MarketLens provides one-click, repeatable investment analytics for any ticker. 
               Generate consistent returns, volatility, drawdown, and RSI analysis instantly.
+              <span className="block mt-2 text-green-600 font-semibold">Analytics update daily with fresh market data.</span>
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
               <Button 
