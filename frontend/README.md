@@ -203,6 +203,7 @@ yarn lint
 
 ✅ Preset ticker buttons (AAPL, MSFT, TSLA, SPY, NVDA)
 ✅ One-click analysis generation
+✅ **Daily automatic data refresh** (analytics update every day)
 ✅ 4 KPI cards with key metrics
 ✅ Interactive price chart
 ✅ Daily returns visualization
