@@ -90,9 +90,10 @@ const LandingPage = ({ onRunDemo, isLoading }) => {
                 size="lg" 
                 className="text-base px-8 py-6 bg-gray-900 hover:bg-gray-800"
                 onClick={handleTryDemo}
+                disabled={isLoading}
               >
                 <Zap className="w-5 h-5 mr-2" />
-                Try Demo (AAPL)
+                {isLoading ? 'Analyzing...' : 'Try Demo (AAPL)'}
               </Button>
               <Button 
                 size="lg" 
