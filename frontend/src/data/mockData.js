@@ -161,7 +161,7 @@ export const METHODOLOGY = {
   },
   volatility: {
     title: 'Rolling 30-Day Volatility',
-    formula: 'σ = √(Σ(r_i - μ)² / n) × √252',
+    formula: 'sigma = sqrt(sum((r_i - mu)^2) / n) * sqrt(252)',
     description: 'Annualized standard deviation of returns over a 30-day rolling window'
   },
   maxDrawdown: {
