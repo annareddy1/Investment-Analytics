@@ -172,6 +172,6 @@ export const METHODOLOGY = {
   rsi: {
     title: 'RSI (14-period)',
     formula: 'RSI = 100 - (100 / (1 + RS))',
-    description: 'Relative Strength Index using Wilder smoothing. RSI ≥ 70 indicates overbought, RSI ≤ 30 indicates oversold'
+    description: 'Relative Strength Index using Wilder smoothing. RSI >= 70 indicates overbought, RSI <= 30 indicates oversold'
   }
 };
