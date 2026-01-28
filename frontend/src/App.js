@@ -4,26 +4,93 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
 import Dashboard from './components/Dashboard';
 import CaseStudy from './components/CaseStudy';
-import { generateMockAnalysis } from './data/mockData';
+import { runAnalysis, pollAnalysis } from './services/api';
+import { useToast } from './hooks/use-toast';
+import { Toaster } from './components/ui/sonner';
+import { toast } from 'sonner';
 
 function App() {
   const [analysisData, setAnalysisData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleRunDemo = (ticker) => {
-    // Generate mock analysis for the selected ticker
-    const analysis = generateMockAnalysis(ticker);
-    setAnalysisData(analysis);
+  const handleRunDemo = async (ticker, navigate) => {
+    setIsLoading(true);
+    toast.loading(`Analyzing ${ticker}...`, { id: 'analysis' });
+    
+    try {
+      // Start analysis
+      const { analysisId } = await runAnalysis(ticker, '1Y');
+      
+      // Poll for completion
+      const result = await pollAnalysis(analysisId);
+      
+      // Transform backend data to match frontend format
+      const transformedData = {
+        ticker: result.ticker,
+        period: result.period,
+        generatedAt: result.generatedAt,
+        lastUpdated: new Date(result.generatedAt).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }),
+        analytics: {
+          cumulativeReturn: result.analytics.cumulativeReturn,
+          maxDrawdown: result.analytics.maxDrawdown,
+          latestVolatility: result.analytics.latestVolatility,
+          latestRSI: result.analytics.latestRSI
+        },
+        charts: {
+          prices: result.charts.prices,
+          returns: result.charts.returns.map(r => ({
+            date: r.date,
+            return: r.returnValue
+          })),
+          volatility: result.charts.volatility,
+          rsi: result.charts.rsi
+        }
+      };
+      
+      setAnalysisData(transformedData);
+      toast.success(`${ticker} analysis complete!`, { id: 'analysis' });
+      
+      if (navigate) {
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      console.error('Analysis error:', error);
+      toast.error(`Failed to analyze ${ticker}. ${error.message}`, { id: 'analysis' });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LandingPage onRunDemo={handleRunDemo} />} />
-          <Route path="/dashboard" element={<Dashboard analysisData={analysisData} />} />
+          <Route 
+            path="/" 
+            element={
+              <LandingPage 
+                onRunDemo={handleRunDemo} 
+                isLoading={isLoading}
+              />
+            } 
+          />
+          <Route 
+            path="/dashboard" 
+            element={
+              <Dashboard 
+                analysisData={analysisData} 
+                isLoading={isLoading}
+              />
+            } 
+          />
           <Route path="/case-study" element={<CaseStudy />} />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </div>
   );
 }
