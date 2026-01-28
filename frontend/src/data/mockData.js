@@ -120,15 +120,23 @@ const calculateAnalytics = (priceData) => {
   };
 };
 
-// Generate mock analysis results
+// Generate mock analysis results - updates daily with current date
 export const generateMockAnalysis = (ticker) => {
   const priceData = generateMockData(ticker);
   const analytics = calculateAnalytics(priceData);
   
+  // Get current date for fresh timestamp
+  const now = new Date();
+  
   return {
     ticker,
     period: '1 Year',
-    generatedAt: new Date().toISOString(),
+    generatedAt: now.toISOString(),
+    lastUpdated: now.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    }),
     priceData: priceData,
     analytics: {
       cumulativeReturn: analytics.cumulativeReturn,
