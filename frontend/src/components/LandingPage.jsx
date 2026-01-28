@@ -5,17 +5,15 @@ import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { PRESET_TICKERS } from '../data/mockData';
 
-const LandingPage = ({ onRunDemo }) => {
+const LandingPage = ({ onRunDemo, isLoading }) => {
   const navigate = useNavigate();
 
   const handleTryDemo = () => {
-    onRunDemo('AAPL');
-    navigate('/dashboard');
+    onRunDemo('AAPL', navigate);
   };
 
   const handlePresetTicker = (ticker) => {
-    onRunDemo(ticker);
-    navigate('/dashboard');
+    onRunDemo(ticker, navigate);
   };
 
   const features = [
