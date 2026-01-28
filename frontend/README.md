@@ -11,6 +11,7 @@ MarketLens is a professional investment analytics platform that provides one-cli
 ### ✨ Features
 
 - **30-Second Analysis**: Generate professional investment analytics instantly
+- **Daily Updates**: Analytics refresh automatically every day with current data
 - **Preset Tickers**: Quick access to AAPL, MSFT, TSLA, SPY, NVDA
 - **Comprehensive Metrics**: Returns, volatility, drawdown, RSI with visual charts
 - **Interactive Dashboard**: 4 KPI cards + 4 detailed charts
