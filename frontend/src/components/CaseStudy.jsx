@@ -137,7 +137,7 @@ const CaseStudy = () => {
                 {problemPoints.map((point, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <div className="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-red-600 text-sm font-bold">×</span>
+                      <span className="text-red-600 text-sm font-bold">X</span>
                     </div>
                     <p className="text-gray-700">{point}</p>
                   </div>
