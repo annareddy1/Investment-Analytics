@@ -98,9 +98,13 @@ const Dashboard = ({ analysisData }) => {
         {/* Title and Info */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">{ticker} Analysis</h1>
-          <p className="text-gray-600">
-            Generated at {new Date(generatedAt).toLocaleString()} · Period: {selectedTicker.period}
-          </p>
+          <div className="flex items-center gap-4 text-gray-600">
+            <p>Generated at {new Date(generatedAt).toLocaleString()}</p>
+            <span>•</span>
+            <p>Period: {selectedTicker.period}</p>
+            <span>•</span>
+            <p className="text-green-600 font-medium">Updates Daily</p>
+          </div>
         </div>
 
         {/* KPI Cards */}
