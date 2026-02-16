@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { TrendingUp, TrendingDown, Activity, AlertTriangle, Download, ArrowLeft } from 'lucide-react';
@@ -8,13 +8,7 @@ import { METHODOLOGY } from '../data/mockData';
 
 const Dashboard = ({ analysisData }) => {
   const navigate = useNavigate();
-  const [selectedTicker, setSelectedTicker] = useState(null);
-
-  useEffect(() => {
-    if (analysisData) {
-      setSelectedTicker(analysisData);
-    }
-  }, [analysisData]);
+  const selectedTicker = analysisData || null;
 
   if (!selectedTicker) {
     return (

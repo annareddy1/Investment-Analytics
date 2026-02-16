@@ -1,8 +1,19 @@
-version: '3.8'
+############################################
+# Docker Compose - MarketLens Development
+# - PostgreSQL database
+# - MongoDB database
+# - Spring Boot backend
+# - All services networked together
+############################################
+
+version: '3.9'
 
 services:
+  # ============================================
+  # PostgreSQL Database
+  # ============================================
   postgres:
-    image: postgres:15-alpine
+    image: postgres:16-alpine
     container_name: marketlens-postgres
     environment:
       POSTGRES_DB: marketlens
@@ -11,46 +22,92 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      # Persist data between container restarts
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - marketlens-network
 
+  # ============================================
+  # MongoDB Database
+  # ============================================
   mongodb:
-    image: mongo:7-jammy
-    container_name: marketlens-mongo
+    image: mongo:7.0
+    container_name: marketlens-mongodb
+    environment:
+      MONGO_INITDB_DATABASE: marketlens
     ports:
       - "27017:27017"
     volumes:
-      - mongo-data:/data/db
+      # Persist data between container restarts
+      - mongodb_data:/data/db
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - marketlens-network
 
+  # ============================================
+  # Spring Boot Backend
+  # ============================================
   backend:
     build:
       context: ./backend-java
       dockerfile: Dockerfile
     container_name: marketlens-backend
-    ports:
-      - "8001:8001"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/marketlens
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
-      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/marketlens
-      CORS_ALLOWED_ORIGINS: http://localhost:3000
     depends_on:
       postgres:
         condition: service_healthy
       mongodb:
         condition: service_healthy
+    environment:
+      # Spring Profile
+      SPRING_PROFILES_ACTIVE: prod
+
+      # Server
+      PORT: 8001
+
+      # PostgreSQL Connection
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: marketlens
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+
+      # MongoDB Connection
+      MONGODB_URI: mongodb://mongodb:27017/marketlens
+      MONGODB_DATABASE: marketlens
+
+      # CORS (for local frontend)
+      CORS_ALLOWED_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
+
+      # JWT (optional - only needed if testing with Auth0)
+      # JWT_ISSUER_URI: https://your-tenant.auth0.com/
+      # JWT_JWK_SET_URI: https://your-tenant.auth0.com/.well-known/jwks.json
+    ports:
+      - "8001:8001"
+    networks:
+      - marketlens-network
     restart: unless-stopped
 
+# ============================================
+# Volumes (Data Persistence)
+# ============================================
 volumes:
-  postgres-data:
-  mongo-data:
+  postgres_data:
+    driver: local
+  mongodb_data:
+    driver: local
+
+# ============================================
+# Networks
+# ============================================
+networks:
+  marketlens-network:
+    driver: bridge

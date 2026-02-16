@@ -1,17 +1,18 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_BASE = `${process.env.REACT_APP_BACKEND_URL}/api`;
+// ✅ Works locally + in prod
+// 1) In dev: set REACT_APP_BACKEND_URL=http://localhost:8001
+// 2) In prod: set REACT_APP_BACKEND_URL=https://your-backend-domain
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:8001";
+const API_BASE = `${BACKEND_URL}/api`;
 
 // Run analysis for a ticker
-export const runAnalysis = async (ticker, period = '1Y') => {
+export const runAnalysis = async (ticker, period = "1Y") => {
   try {
-    const response = await axios.post(`${API_BASE}/analysis/run`, {
-      ticker,
-      period
-    });
+    const response = await axios.post(`${API_BASE}/analysis/run`, { ticker, period });
     return response.data;
   } catch (error) {
-    console.error('Error running analysis:', error);
+    console.error("Error running analysis:", error);
     throw error;
   }
 };
@@ -22,7 +23,7 @@ export const getAnalysis = async (analysisId) => {
     const response = await axios.get(`${API_BASE}/analysis/${analysisId}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching analysis:', error);
+    console.error("Error fetching analysis:", error);
     throw error;
   }
 };
@@ -32,23 +33,17 @@ export const pollAnalysis = async (analysisId, maxAttempts = 60, interval = 2000
   for (let i = 0; i < maxAttempts; i++) {
     try {
       const result = await getAnalysis(analysisId);
-      
-      if (result.status === 'COMPLETED') {
-        return result;
-      }
-      
-      if (result.status === 'FAILED') {
-        throw new Error(result.message || 'Analysis failed');
-      }
-      
-      // Wait before polling again
-      await new Promise(resolve => setTimeout(resolve, interval));
+
+      if (result.status === "COMPLETED") return result;
+      if (result.status === "FAILED") throw new Error(result.message || "Analysis failed");
+
+      await new Promise((resolve) => setTimeout(resolve, interval));
     } catch (error) {
       if (i === maxAttempts - 1) throw error;
     }
   }
-  
-  throw new Error('Analysis timed out after 2 minutes');
+
+  throw new Error("Analysis timed out after 2 minutes");
 };
 
 // Get latest analysis for a ticker
@@ -57,7 +52,7 @@ export const getLatestAnalysis = async (ticker) => {
     const response = await axios.get(`${API_BASE}/analysis/ticker/${ticker}/latest`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching latest analysis:', error);
+    console.error("Error fetching latest analysis:", error);
     throw error;
   }
 };
@@ -68,7 +63,7 @@ export const getPresetTickers = async () => {
     const response = await axios.get(`${API_BASE}/tickers/presets`);
     return response.data.tickers;
   } catch (error) {
-    console.error('Error fetching preset tickers:', error);
+    console.error("Error fetching preset tickers:", error);
     throw error;
   }
 };
