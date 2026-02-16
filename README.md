@@ -1,7 +1,5 @@
 <h1>MarketLens</h1>
 
-<p>Link: https://marketinvestment-analytics.netlify.app/</p>
-
 <p>
   <strong>MarketLens</strong> is a full-stack AI-powered market analysis platform that provides insights into
   financial markets using machine learning, data pipelines, and a modern web interface. The project consists of a
