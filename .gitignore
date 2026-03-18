@@ -85,3 +85,4 @@ frontend/node_modules/.cache/
 *.deb
 *.dylib
 EOFbackend-java/src/main/resources/application-dev.properties
+backend-java/src/main/resources/application.properties
