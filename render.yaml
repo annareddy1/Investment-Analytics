@@ -1,8 +1,10 @@
+cat > ~/Downloads/Investment-Analytics/render.yaml << 'EOF'
 services:
   - type: web
     name: marketlens-backend
     runtime: docker
     repo: https://github.com/annareddy1/Investment-Analytics
+    branch: main
     plan: free
     region: oregon
     rootDir: backend-java
@@ -22,10 +24,18 @@ services:
       - key: DB_HOST
         sync: false
       - key: DB_PORT
-        value: 5432
+        value: "5432"
       - key: DB_NAME
         value: marketlens
       - key: DB_USERNAME
         sync: false
       - key: DB_PASSWORD
         sync: false
+
+databases:
+  - name: marketlens-postgres
+    databaseName: marketlens
+    user: marketlens
+    region: oregon
+    plan: free
+EOF
