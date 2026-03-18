@@ -1,4 +1,5 @@
 cat > ~/Downloads/Investment-Analytics/render.yaml << 'EOF'
+version: "1"
 services:
   - type: web
     name: marketlens-backend
