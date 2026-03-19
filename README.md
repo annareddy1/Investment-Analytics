@@ -1,6 +1,6 @@
 # MarketLens
 
-**AI-powered stock analysis platform** — enter any ticker, get institutional-grade risk metrics, interactive charts, and LLM-generated investment insights in seconds.
+**AI-powered investment analytics platform** — analyze stocks and portfolios, model risk, simulate market scenarios, and receive LLM-generated investment insights through a single, unified interface.
 
 🔗 **Live Demo:** [investment-analytics-nu.vercel.app](https://investment-analytics-nu.vercel.app)
 
@@ -8,9 +8,21 @@
 
 ## What It Does
 
-MarketLens pulls real market data from Yahoo Finance, runs a full quantitative analytics pipeline, and delivers a plain-language AI summary of the stock's risk profile — the kind of output a junior analyst would spend hours producing, automated end-to-end.
+MarketLens transforms raw market data into institutional-grade investment intelligence. Enter a ticker or build a portfolio, and the platform runs a full quantitative pipeline — computing risk metrics, scoring diversification, and generating a plain-language AI insight that tells you not just *what* the numbers are, but *what to do about them*.
 
-Built to demonstrate full-stack engineering depth in a finance context: from raw OHLCV data ingestion through statistical computation to LLM orchestration and a production React UI.
+```
+Market Data → Financial Metrics → Risk Modeling → AI Insights → Decision
+```
+
+**Example output:**
+```
+Risk Level:       High
+Diversification:  Low
+Suggested Action: Reduce exposure / hedge
+
+"This stock shows elevated downside risk with weak sentiment and bearish trend,
+indicating caution for short-term investors."
+```
 
 ---
 
@@ -40,7 +52,7 @@ React (CRA)  ──POST /api/analysis/run──►  Spring Boot (Java 17)
 
 ---
 
-## Features
+## Current Features
 
 **Quantitative Analytics Pipeline**
 - Cumulative return over configurable periods (1M · 3M · 6M · 1Y · 5Y)
@@ -58,6 +70,68 @@ React (CRA)  ──POST /api/analysis/run──►  Spring Boot (Java 17)
 - Polling-based status updates (PROCESSING → COMPLETED → insight fetch)
 - Dual-database architecture: PostgreSQL for job state, MongoDB for analysis documents
 - Deployed on Render (backend) + Vercel (frontend)
+
+---
+
+## Application Structure
+
+The platform is organized into five analytical tabs:
+
+| Tab | Purpose | Key Outputs |
+|---|---|---|
+| **Overview** | Stock snapshot | Price, period returns, summary |
+| **Risk** | Deep risk analysis | Volatility, drawdown, VaR, Beta vs S&P 500 |
+| **AI Insights** | Human-readable intelligence | LLM narrative, risk level, recommendation |
+| **Portfolio** | Multi-stock analytics | Combined return, risk, diversification score |
+| **Simulation** | Scenario modeling | Portfolio impact under market crash / rate shock |
+
+---
+
+## Roadmap
+
+The platform is actively being extended. Each item below is a discrete engineering feature with a defined input/output contract.
+
+### Portfolio Builder
+Add multiple tickers with custom weights, store portfolios, and compute aggregated metrics — combined return, portfolio-level risk, and weighted exposure breakdown.
+
+### Hidden Risk Score
+A composite 0–100 risk indicator combining volatility, cross-asset correlation, and sentiment signal strength into a single actionable number with color-coded severity.
+
+```
+Risk Score = 0.4 × Volatility + 0.3 × Correlation + 0.3 × Sentiment
+Output: Risk Score 78/100 → High Risk
+```
+
+### Drawdown Story
+Transform raw drawdown numbers into a ranked narrative of historical crashes — depth, start date, trough date, and recovery time in trading days.
+
+```
+Max Drawdown:   -32%
+Recovery Time:  210 trading days
+```
+
+### Smart Alerts Engine
+Event-driven alerts that fire on behavioral signals, not price levels. Triggers include volatility spikes above rolling threshold, trend deviation beyond a sigma band, and portfolio correlation breaching 0.80.
+
+### Correlation Heatmap
+Visual pairwise correlation matrix across all portfolio holdings. Pairs with |correlation| > 0.80 are flagged automatically — surfaces hidden concentration risk that return data alone cannot reveal.
+
+```
+AAPL ↔ MSFT = 0.85 → Low diversification benefit
+```
+
+### Simulation Engine
+Stress-test portfolios against historical and hypothetical scenarios — market crash (−10%), sector-specific drops, interest rate shocks. Output: projected portfolio impact as a percentage loss.
+
+### Signature Scoring Metrics
+Four proprietary scores that differentiate the platform from standard dashboards:
+
+| Score | Definition |
+|---|---|
+| **Stability Score** | Low volatility + low drawdown = high stability |
+| **Momentum Strength** | Trend consistency across 20/50/200-day windows |
+| **Sentiment Confidence** | Reliability of sentiment signals based on volume + source agreement |
+| **Diversification Score** | Derived from pairwise correlation matrix across portfolio assets |
 
 ---
 
@@ -123,5 +197,6 @@ Runs at `http://localhost:3000`
 ## Author
 
 **Rithika Annareddy**
+Data Engineering & Analytics · AI/ML · The Ohio State University
 
 [GitHub](https://github.com/annareddy1) · [LinkedIn](https://linkedin.com/in/rithika-annareddy)
