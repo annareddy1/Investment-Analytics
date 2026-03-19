@@ -20,13 +20,9 @@ services:
         sync: false
       - key: MONGODB_DATABASE
         value: marketlens
-      - key: DB_HOST
+      - key: SPRING_DATASOURCE_URL
         sync: false
-      - key: DB_PORT
-        value: 5432
-      - key: DB_NAME
-        value: marketlens
-      - key: DB_USERNAME
+      - key: SPRING_DATASOURCE_USERNAME
         sync: false
-      - key: DB_PASSWORD
+      - key: SPRING_DATASOURCE_PASSWORD
         sync: false

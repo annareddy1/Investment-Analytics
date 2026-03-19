@@ -29,7 +29,4 @@ ENV JAVA_OPTS="-XX:+UseContainerSupport \
                -XX:+ExitOnOutOfMemoryError \
                -Djava.security.egd=file:/dev/./urandom"
 
-ENV SPRING_PROFILES_ACTIVE=prod
-ENV PORT=10000
-
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar --server.port=${PORT}"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Dserver.port=${PORT:-10000} -jar app.jar"]

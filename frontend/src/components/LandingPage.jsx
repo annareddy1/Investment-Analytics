@@ -100,7 +100,6 @@ const LandingPage = ({ onRunDemo, isLoading }) => {
             </div>
             <nav className="flex items-center gap-6">
               <a href="#features" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Features</a>
-              <a href="#case-study" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Case Study</a>
               <a href="#stack" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Stack</a>
             </nav>
           </div>
@@ -184,15 +183,6 @@ const LandingPage = ({ onRunDemo, isLoading }) => {
               >
                 <Zap className="w-5 h-5 mr-2" />
                 {isLoading ? 'Analyzing...' : 'Try Demo (AAPL)'}
-              </Button>
-
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-base px-8 py-6 border-gray-300 hover:bg-gray-50"
-                onClick={() => navigate('/case-study')}
-              >
-                View Case Study
               </Button>
             </div>
 

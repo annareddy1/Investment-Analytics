@@ -3,7 +3,6 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import Dashboard from "./components/Dashboard";
-import CaseStudy from "./components/CaseStudy";
 import { runAnalysis, pollAnalysis } from "./services/api";
 import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
@@ -129,7 +128,6 @@ function App() {
               />
             }
           />
-          <Route path="/case-study" element={<CaseStudy />} />
         </Routes>
       </BrowserRouter>
       <Toaster />
