@@ -1,15 +1,26 @@
 import axios from "axios";
 
-// ✅ Works locally + in prod
-// 1) In dev: set REACT_APP_BACKEND_URL=http://localhost:8001
-// 2) In prod: set REACT_APP_BACKEND_URL=https://your-backend-domain
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:8001";
-const API_BASE = `${BACKEND_URL}/api`;
+// ✅ Correct env variable name (consistent)
+// In local: REACT_APP_API_BASE_URL=http://localhost:8001
+// In prod:  REACT_APP_API_BASE_URL=https://marketlens-backend-3pas.onrender.com
+
+const API_BASE =
+  process.env.REACT_APP_API_BASE_URL
+    ? `${process.env.REACT_APP_API_BASE_URL}/api`
+    : "http://localhost:8001/api";
+
+// ✅ Create axios instance (cleaner + reusable)
+const api = axios.create({
+  baseURL: API_BASE,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 // Run analysis for a ticker
 export const runAnalysis = async (ticker, period = "1Y") => {
   try {
-    const response = await axios.post(`${API_BASE}/analysis/run`, { ticker, period });
+    const response = await api.post("/analysis/run", { ticker, period });
     return response.data;
   } catch (error) {
     console.error("Error running analysis:", error);
@@ -20,7 +31,7 @@ export const runAnalysis = async (ticker, period = "1Y") => {
 // Get analysis by ID
 export const getAnalysis = async (analysisId) => {
   try {
-    const response = await axios.get(`${API_BASE}/analysis/${analysisId}`);
+    const response = await api.get(`/analysis/${analysisId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching analysis:", error);
@@ -49,7 +60,7 @@ export const pollAnalysis = async (analysisId, maxAttempts = 60, interval = 2000
 // Get latest analysis for a ticker
 export const getLatestAnalysis = async (ticker) => {
   try {
-    const response = await axios.get(`${API_BASE}/analysis/ticker/${ticker}/latest`);
+    const response = await api.get(`/analysis/ticker/${ticker}/latest`);
     return response.data;
   } catch (error) {
     console.error("Error fetching latest analysis:", error);
@@ -60,7 +71,7 @@ export const getLatestAnalysis = async (ticker) => {
 // Get preset tickers
 export const getPresetTickers = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/tickers/presets`);
+    const response = await api.get("/tickers/presets");
     return response.data.tickers;
   } catch (error) {
     console.error("Error fetching preset tickers:", error);
