@@ -197,6 +197,5 @@ Runs at `http://localhost:3000`
 ## Author
 
 **Rithika Annareddy**
-Data Engineering & Analytics · AI/ML · The Ohio State University
 
 [GitHub](https://github.com/annareddy1) · [LinkedIn](https://linkedin.com/in/rithika-annareddy)
